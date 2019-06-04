@@ -1,0 +1,14 @@
+version: '3.2'
+services:
+  db:
+    image: microsoft/mssql-server-linux:2017-latest
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: P@s5w0rd # ※のちに再設定するパスワード
+    volumes:
+      - ./mssql/:/var/opt/mssql/
+      - ./assets/:/opt/mssql/assets/
+    ports:
+      - "1433:1433"
+
+# 参考：https://qiita.com/suzuki_sh/items/af2ba90ffa8200b996d7
