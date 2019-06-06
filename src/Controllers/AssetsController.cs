@@ -25,10 +25,11 @@ namespace pdf_server.Controllers
         {
             try
             {
+                Console.WriteLine(id, serial);
                 var bytes = this.service.GetPDFData(id, serial);
                 return this.File(bytes, "application/octet-stream");
             }
-            catch (FileNotFoundException)
+            catch (Exception)
             {
                 return NotFound();
             }
