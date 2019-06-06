@@ -9,16 +9,38 @@ namespace pdf_server.Services
 {
     public class PDFService
     {
-        private IRepository repository;
-        public PDFService(IRepository repository)
+        private IStorageStatusDao repository;
+        public PDFService(IStorageStatusDao repository)
         {
             this.repository = repository;
         }
 
         public byte[] GetPDFData(string id, int serial)
         {
-            // TODO: modelに合致するSerialのPathを取得するように変更する
-            var filePath = this.repository.findById(id);
+            var status = this.repository.findByCustomerCode(id);
+            var filePath = "";
+            switch (serial)
+            {
+                case 1:
+                    filePath = status.picturePath1;
+                    break;
+                case 2:
+                    filePath = status.picturePath2;
+                    break;
+                case 3:
+                    filePath = status.picturePath3;
+                    break;
+                case 4:
+                    filePath = status.picturePath4;
+                    break;
+                case 5:
+                    filePath = status.picturePath5;
+                    break;
+            }
+            if (filePath == "" || !File.Exists(filePath))
+            {
+                throw new FileNotFoundException(filePath);
+            }
             using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
                 var bytes = new byte[fs.Length];

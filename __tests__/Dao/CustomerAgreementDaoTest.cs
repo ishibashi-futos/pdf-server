@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using pdf_server.Dao;
 
-namespace Tests
+namespace Tests.Dao
 {
     public class CustomerAgreementDaoTest
     {
