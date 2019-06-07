@@ -12,9 +12,28 @@ namespace pdf_server.Dao
         {
         }
 
-        public StorageStatus findByCustomerCode(string customerCode)
+        public List<StorageStatus> findAll()
         {
             var resultList  = new List<StorageStatus>();
+            StringBuilder s = new StringBuilder();
+            s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
+            s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
+            s.Append("  FROM [dbo].[M_取引先契約書]");
+            using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
+            {
+                using(var dr = sql.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        resultList.Add(this.reader(dr));
+                    }
+                }
+            }
+            return resultList;
+        }
+
+        public StorageStatus findByCustomerCode(string customerCode)
+        {
             StringBuilder s = new StringBuilder();
             s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
             s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
@@ -33,6 +52,52 @@ namespace pdf_server.Dao
                 }
                 return null;
             }
+        }
+
+        public List<StorageStatus> findByCustomerNameLike(string customerName)
+        {
+            var resultList  = new List<StorageStatus>();
+            StringBuilder s = new StringBuilder();
+            s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
+            s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
+            s.Append("  FROM [dbo].[M_取引先契約書]");
+            s.Append(" WHERE 取引先名 LIKE @customerName");
+            using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
+            {
+                // パラメータをセット
+                sql.Parameters.AddWithValue("@customerName", customerName + "%");
+                using(var dr = sql.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        resultList.Add(this.reader(dr));
+                    }
+                }
+            }
+            return resultList;
+        }
+
+        public List<StorageStatus> findByCustomerNameKanaLike(string customerNameKana)
+        {
+            var resultList  = new List<StorageStatus>();
+            StringBuilder s = new StringBuilder();
+            s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
+            s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
+            s.Append("  FROM [dbo].[M_取引先契約書]");
+            s.Append(" WHERE 取引先名_カナ LIKE @customerNameKana");
+            using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
+            {
+                // パラメータをセット
+                sql.Parameters.AddWithValue("@customerNameKana", customerNameKana + "%");
+                using(var dr = sql.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        resultList.Add(this.reader(dr));
+                    }
+                }
+            }
+            return resultList;
         }
 
         private StorageStatus reader(SqlDataReader dr)
