@@ -16,8 +16,7 @@ namespace pdf_server.Dao
         {
             var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
-            s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
-            s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
+            s.Append("SELECT * ");
             s.Append("  FROM [dbo].[M_取引先契約書]");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
             {
@@ -35,8 +34,7 @@ namespace pdf_server.Dao
         public StorageStatus findByCustomerCode(string customerCode)
         {
             StringBuilder s = new StringBuilder();
-            s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
-            s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
+            s.Append("SELECT * ");
             s.Append("  FROM [dbo].[M_取引先契約書]");
             s.Append(" WHERE 取引先コード = @customerCode");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
@@ -58,8 +56,7 @@ namespace pdf_server.Dao
         {
             var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
-            s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
-            s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
+            s.Append("SELECT * ");
             s.Append("  FROM [dbo].[M_取引先契約書]");
             s.Append(" WHERE 取引先名 LIKE @customerName");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
@@ -81,8 +78,7 @@ namespace pdf_server.Dao
         {
             var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
-            s.Append("SELECT 取引先コード, 取引先名, 取引先名_カナ, 取引先区分, コード内容, 画像場所1, 備考1, 画像場所2, 備考2, 画像場所3,");
-            s.Append("       備考3, 画像場所4, 備考4, 画像場所5, 備考5");
+            s.Append("SELECT * ");
             s.Append("  FROM [dbo].[M_取引先契約書]");
             s.Append(" WHERE 取引先名_カナ LIKE @customerNameKana");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
