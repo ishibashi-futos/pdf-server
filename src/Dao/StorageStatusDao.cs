@@ -17,7 +17,7 @@ namespace pdf_server.Dao
             var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
             s.Append("SELECT * ");
-            s.Append("  FROM [dbo].[M_取引先契約書]");
+            s.Append("  FROM [dbo].[Q_売買契約書保管状況_雛形]");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
             {
                 using(var dr = sql.ExecuteReader())
@@ -36,7 +36,7 @@ namespace pdf_server.Dao
             var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
             s.Append("SELECT * ");
-            s.Append("  FROM [dbo].[M_取引先契約書]");
+            s.Append("  FROM [dbo].[Q_売買契約書保管状況_雛形]");
             s.Append(" WHERE 取引先コード = @customerCode");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
             {
@@ -59,7 +59,7 @@ namespace pdf_server.Dao
             var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
             s.Append("SELECT * ");
-            s.Append("  FROM [dbo].[M_取引先契約書]");
+            s.Append("  FROM [dbo].[Q_売買契約書保管状況_雛形]");
             s.Append(" WHERE 取引先名 LIKE @customerName");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
             {
@@ -81,7 +81,7 @@ namespace pdf_server.Dao
             var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
             s.Append("SELECT * ");
-            s.Append("  FROM [dbo].[M_取引先契約書]");
+            s.Append("  FROM [dbo].[Q_売買契約書保管状況_雛形]");
             s.Append(" WHERE 取引先名_カナ LIKE @customerNameKana");
             using(SqlCommand sql = new SqlCommand(s.ToString(), this.conn))
             {
@@ -104,16 +104,19 @@ namespace pdf_server.Dao
             vo.customerCode = dr.GetString(0);
             vo.customerName = dr.GetString(1);
             vo.customerName_Kana = dr.GetString(2);
-            vo.picturePath1 = dr.GetString(3);
-            vo.remarks1 = dr.GetString(4);
-            vo.picturePath2 = dr.GetString(5);
-            vo.remarks2 = dr.GetString(6);
-            vo.picturePath3 = dr.GetString(7);
-            vo.remarks3 = dr.GetString(8);
-            vo.picturePath4 = dr.GetString(9);
-            vo.remarks4 = dr.GetString(10);
-            vo.picturePath5 = dr.GetString(11);
-            vo.remarks5 = dr.GetString(12);
+            vo.customerKbn = dr.GetString(3);
+            vo.codeContents = dr.GetString(4);
+            vo.picturePath1 = dr.GetString(5);
+            vo.remarks1 = dr.GetString(6);
+            vo.picturePath2 = dr.GetString(7);
+            vo.remarks2 = dr.GetString(8);
+            vo.picturePath3 = dr.GetString(9);
+            vo.remarks3 = dr.GetString(10);
+            vo.picturePath4 = dr.GetString(11);
+            vo.remarks4 = dr.GetString(12);
+            vo.picturePath5 = dr.GetString(13);
+            vo.remarks5 = dr.GetString(14);
+            Console.WriteLine(vo.picturePath1);
             return vo;
         }
     }
@@ -123,6 +126,8 @@ namespace pdf_server.Dao
         public string customerCode {get; set;}
         public string customerName {get; set;}
         public string customerName_Kana {get; set;}
+        public string customerKbn {get; set;}
+        public string codeContents {get; set;}
         public string picturePath1 {get; set;}
         public string remarks1 {get; set;}
         public string picturePath2 {get; set;}
