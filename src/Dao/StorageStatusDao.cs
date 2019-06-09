@@ -31,8 +31,9 @@ namespace pdf_server.Dao
             return resultList;
         }
 
-        public StorageStatus findByCustomerCode(string customerCode)
+        public List<StorageStatus> findByCustomerCode(string customerCode)
         {
+            var resultList  = new List<StorageStatus>();
             StringBuilder s = new StringBuilder();
             s.Append("SELECT * ");
             s.Append("  FROM [dbo].[M_取引先契約書]");
@@ -45,7 +46,8 @@ namespace pdf_server.Dao
                 {
                     while (dr.Read())
                     {
-                        return this.reader(dr);
+                        resultList.Add(this.reader(dr));
+                        return resultList;
                     }
                 }
                 return null;
@@ -135,6 +137,9 @@ namespace pdf_server.Dao
 
     public interface IStorageStatusDao
     {
-        StorageStatus findByCustomerCode(string customerCode);
+        List<StorageStatus> findAll();
+        List<StorageStatus> findByCustomerCode(string customerCode);
+        List<StorageStatus> findByCustomerNameLike(string customerName);
+        List<StorageStatus> findByCustomerNameKanaLike(string customerNameKana);
     }
 }

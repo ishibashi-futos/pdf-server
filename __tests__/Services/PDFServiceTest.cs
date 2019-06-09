@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using Xunit;
 using pdf_server.Dao;
 using pdf_server.Services;
@@ -46,6 +47,18 @@ namespace Tests.Services
             }
         }
 
+        [Fact]
+        public void DaoTest()
+        {
+            var service = new PDFService(new StorageStatusDao());
+            using (var fs = new FileStream(@"/opt/pdf-server/assets/README.pdf", FileMode.Open, FileAccess.Read))
+            {
+                var bytes = new byte[fs.Length];
+                fs.Read(bytes, 0, (int)fs.Length);
+                Assert.Equal(bytes, service.GetPDFData("115000", 1));
+            }
+        }
+
     }
 
     public class TestDao : IStorageStatusDao 
@@ -56,14 +69,30 @@ namespace Tests.Services
 
         }
 
+        public List<StorageStatus> findAll()
+        {
+            return new List<StorageStatus>();
+        }
+
         public void SetStorageStatus(StorageStatus status)
         {
             this.status = status;
         }
 
-        public StorageStatus findByCustomerCode(string customerCode)
+        public List<StorageStatus> findByCustomerCode(string customerCode)
         {
-            return this.status;
+            var list = new List<StorageStatus>();
+            list.Add(status);
+            return list;
+        }
+
+        public List<StorageStatus> findByCustomerNameLike(string customerName)
+        {
+            return new List<StorageStatus>();
+        }
+        public List<StorageStatus> findByCustomerNameKanaLike(string customerNameKana)
+        {
+            return new List<StorageStatus>();
         }
     }
 }

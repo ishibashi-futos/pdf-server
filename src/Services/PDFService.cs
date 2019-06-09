@@ -17,7 +17,7 @@ namespace pdf_server.Services
 
         public byte[] GetPDFData(string id, int serial)
         {
-            var status = this.repository.findByCustomerCode(id);
+            var status = this.repository.findByCustomerCode(id)[0];
             var filePath = "";
             switch (serial)
             {
