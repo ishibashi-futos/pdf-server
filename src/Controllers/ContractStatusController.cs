@@ -9,27 +9,30 @@ using pdf_server.Dao;
 
 namespace pdf_server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/contracts")]
     [ApiController]
-    public class AssetsController : ControllerBase
+    public class ContractStatusController : ControllerBase
     {
-        [HttpGet("{id}/pdf.pdf")]
-        public ActionResult Get(string id, [FromQuery]int serial)
+
+        // GET api/values/5
+        [HttpGet]
+        public ActionResult<IEnumerable<StorageStatus>> Get([FromQuery]string customerCode, [FromQuery]string customerName, [FromQuery]string customerNameKana)
         {
             try
             {
                 using(var dao = new StorageStatusDao())
                 {
-                    var service =  new PDFService(dao);
-                    var bytes = service.GetPDFData(id, serial);
-                    return this.File(bytes, "application/octet-stream");
+                    var service = new StorageStatusService(dao);
+                    var data = service.GetData(customerCode, customerName, customerNameKana);
+                    return data;
                 }
-            }
+             }
             catch (Exception)
             {
                 return NotFound();
             }
         }
+
     }
 
 }
