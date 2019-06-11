@@ -1,0 +1,16 @@
+stages:
+  - build
+
+build_win10_x64:
+  stage: build
+  tags:
+    - docker
+  image: mcr.microsoft.com/dotnet/core/sdk:2.2
+  script:
+    - pushd src/
+    - dotnet publish --configuration Release --runtime win10-x64 --self-contained && popd
+    - cp ./src/appsettings.json src/bin/Release/netcoreapp2.2/win10-x64/publish/
+  artifacts:
+    expire_in: 30 days
+    paths: 
+      - "src/bin/Release/netcoreapp2.2/win10-x64/publish/"
