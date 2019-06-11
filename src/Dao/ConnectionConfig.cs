@@ -20,7 +20,7 @@ namespace pdf_server.Dao
             DataSource = config["connectionConfig:DataSource"];
             UserID = config["connectionConfig:UserID"];
             Password = config["connectionConfig:Password"];
-            InitialCatalog = config["connectionConfig:DataSource"];
+            InitialCatalog = config["connectionConfig:InitialCatalog"];
         }
 
     }
