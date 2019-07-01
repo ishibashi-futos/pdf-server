@@ -10,12 +10,7 @@ namespace pdf_server.Dao
         protected SqlConnection conn = null;
         public DaoFactory()
         {
-          SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-          builder.DataSource = ConnectionConfig.DataSource;
-          builder.UserID = ConnectionConfig.UserID;
-          builder.Password = ConnectionConfig.Password;
-          builder.InitialCatalog = ConnectionConfig.InitialCatalog;
-          this.conn = new SqlConnection(builder.ConnectionString);
+          this.conn = new SqlConnection(ConnectionConfig.ConnectionString);
           this.conn.Open();
         }
 

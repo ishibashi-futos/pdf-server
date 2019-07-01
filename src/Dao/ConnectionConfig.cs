@@ -1,4 +1,5 @@
 using System;
+using System.Data.SqlClient;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
@@ -6,10 +7,7 @@ namespace pdf_server.Dao
 {
     public static class ConnectionConfig
     {
-        public static readonly string DataSource;
-        public static readonly string UserID;
-        public static readonly string Password;
-        public static readonly string InitialCatalog;
+        public static readonly string ConnectionString;
 
         static ConnectionConfig()
         {
@@ -17,10 +15,29 @@ namespace pdf_server.Dao
             configBuilder.SetBasePath(Directory.GetCurrentDirectory());
             configBuilder.AddJsonFile(@"appsettings.json");
             var config = configBuilder.Build();
-            DataSource = config["connectionConfig:DataSource"];
-            UserID = config["connectionConfig:UserID"];
-            Password = config["connectionConfig:Password"];
-            InitialCatalog = config["connectionConfig:InitialCatalog"];
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = config["connectionConfig:DataSource"];
+            builder.UserID = config["connectionConfig:UserID"];
+            builder.Password = config["connectionConfig:Password"];
+            builder.InitialCatalog = config["connectionConfig:InitialCatalog"];
+            ConnectionString = builder.ConnectionString;
+            ConnectionTest();
+        }
+
+        private static void ConnectionTest()
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+
+                }
+            }
+            catch (Exception e)
+            {
+                var writer = Console.Error;
+                writer.WriteLine(e.Message);
+            }
         }
 
     }
